@@ -28,7 +28,6 @@ body {
   background-color: antiquewhite;
   width: var(--contaier-width);
   height: var(--container-height);
-
   position: relative;
   overflow: hidden;
 }
