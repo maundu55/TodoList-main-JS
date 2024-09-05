@@ -56,3 +56,9 @@ function renderTodos(){
     `
    });
 }
+
+//CLICK EVENT LISTENERS FOR ALL THE TODOS
+todosListEl.addEventListener('click', (event)=>{
+    const target = event.target;
+    console.log(target);
+})
