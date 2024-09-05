@@ -1,6 +1,8 @@
 //SELECT ELEMENTS
 const form = document.getElementById('todoform');
 const todoInput = document.getElementById('newtodo');
+const todosListEl= document.getElementById('todos-list');
+
 
 //Define an array
 let todos =[];
@@ -40,5 +42,17 @@ const isDuplicate = todos.some((todo)=>todo.value.toUpperCase() ===todoValue.toU
 
 //RENDER TODOS
 function renderTodos(){
-    
+    //CLEAR ELEMENT BEFORE A RE-RENDER
+    todosListEl.innerHTML = '';
+    //RENDER TODOS
+   todos.forEach((todo, index)=>{
+    todosListEl.innerHTML += `
+     <div class="todo" id="${index}">
+                <i class="bi ${todo.checked ? 'bi-check-circle-fill' : 'bi-circle' }" style="color: ${todo.color}"></i>
+                <p class="checked">${todo.value}</p>
+                <i class="bi bi-pencil-square"></i>
+                <i class="bi bi-trash"></i>
+            </div>
+    `
+   });
 }
