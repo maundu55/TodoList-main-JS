@@ -62,14 +62,22 @@ todosListEl.addEventListener('click', (event)=>{
     const target = event.target;
     const parentElement = target.parentNode;
 
-    if(parentElement.className !== 'todo')
-    return;
-//todo id
+    if(parentElement.className !== 'todo')return;
+
+//t odo id
     const todo = parentElement;
     const todoId = Number(todo.id);
 
     //target action
     const action = target.dataset.action;
 
-    console.log(todoId,action);
-})
+    action ==="check" && checkTodo(todoId);
+    action ==="edit" && editodo(todoId);
+    action ==="delete" && deleteTodo(todoId);
+
+});
+
+// CHECK A TODO
+function checkTodo(){
+    
+}
