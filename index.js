@@ -6,6 +6,7 @@ const todosListEl= document.getElementById('todos-list');
 
 //Define an array
 let todos =[];
+let EditTodoId = -1;
 
 //FORM SUBMIT
 form.addEventListener('submit', (e)=>{
@@ -30,12 +31,20 @@ const isDuplicate = todos.some((todo)=>todo.value.toUpperCase() ===todoValue.toU
     }else if(isDuplicate){
       alert('todo already exists')  
     }
-    else {    
-    todos.push({
-        value:todoValue,
-        checked:false,
-        color: '#' + Math.floor(Math.random()*16777215).toString(16)
-    });
+    else { if(EditTodoId >= 0){
+        // update the edit todo
+       todos = todos.map((todo, index)=>({
+                ...todo,
+                value: index === EditTodoId ? todoValue : todo.value
+            }));
+            EditTodoId = -1;
+    } else {
+        todos.push({
+            value:todoValue,
+            checked:false,
+            color: '#' + Math.floor(Math.random()*16777215).toString(16)
+        });
+    } 
     todoInput.value ='';
 }
 }
@@ -72,12 +81,22 @@ todosListEl.addEventListener('click', (event)=>{
     const action = target.dataset.action;
 
     action ==="check" && checkTodo(todoId);
-    action ==="edit" && editodo(todoId);
-    action ==="delete" && deleteTodo(todoId);
+    action ==="edit" && editTodo(todoId);
+    // action ==="delete" && deleteTodo(todoId);
 
 });
 
 // CHECK A TODO
-function checkTodo(){
-    
+function checkTodo(todoId){
+  todos = todos.map((todo, index) => ({
+    ...todo,
+    checked: index === todoId ? !todo.checked : todo.checked,
+  }));
+  renderTodos();
+}
+
+//EDIT A TODO
+function editTodo(){
+    todoInput.value = todos[todoId].value;
+    EditTodo = todoId;
 }
