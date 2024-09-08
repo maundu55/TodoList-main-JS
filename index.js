@@ -6,8 +6,11 @@ const notificationEl = document.querySelector('.notification');
 
 
 //Define an array
-let todos =[];
+let todos = JSON.parse(localStorage.getItem('todos')) || [];
 let EditTodoId = -1;
+
+//1st render
+renderTodos();
 
 //FORM SUBMIT
 form.addEventListener('submit', (e)=>{
@@ -15,6 +18,7 @@ form.addEventListener('submit', (e)=>{
 
     saveTodo();
     renderTodos();
+    localStorage.setItem('todos', JSON.stringify(todos))
 });
 
 //SAVE TODO
@@ -52,6 +56,11 @@ const isDuplicate = todos.some((todo)=>todo.value.toUpperCase() ===todoValue.toU
 
 //RENDER TODOS
 function renderTodos(){
+    if(todos.length === 0){
+        todosListEl.innerHTML = `<center>Nothing to do!</center>`
+        return;
+    }
+
     //CLEAR ELEMENT BEFORE A RE-RENDER
     todosListEl.innerHTML = '';
     //RENDER TODOS
@@ -59,7 +68,7 @@ function renderTodos(){
     todosListEl.innerHTML += `
      <div class="todo" id="${index}">
                 <i class="bi ${todo.checked ? 'bi-check-circle-fill' : 'bi-circle' }" style="color: ${todo.color}" data-action ="check"></i>
-                <p class="" data-action ="check">${todo.value}</p>
+                <p class="${todo.checked ? 'checked' : ''}" data-action ="check">${todo.value}</p>
                 <i class="bi bi-pencil-square" data-action ="edit"></i>
                 <i class="bi bi-trash" data-action ="delete"></i>
             </div>
@@ -94,6 +103,7 @@ function checkTodo(todoId){
     checked: index === todoId ? !todo.checked : todo.checked,
   }));
   renderTodos();
+  localStorage.setItem('todos', JSON.stringify(todos))
 }
 
 //EDIT A TODO
@@ -108,6 +118,7 @@ function deleteTodo(todoId){
 
     //re-render
     renderTodos();
+    localStorage.setItem('todos', JSON.stringify(todos))
 }
 //SHOW A NOTIFICATION
 function showNotification(msg){
