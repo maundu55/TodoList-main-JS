@@ -2,6 +2,7 @@
 const form = document.getElementById('todoform');
 const todoInput = document.getElementById('newtodo');
 const todosListEl= document.getElementById('todos-list');
+const notificationEl = document.querySelector('.notification');
 
 
 //Define an array
@@ -27,9 +28,9 @@ const isEmpty = todoValue ==='';
 const isDuplicate = todos.some((todo)=>todo.value.toUpperCase() ===todoValue.toUpperCase());
 
     if(isEmpty){
-        alert('todo is empty')
+        showNotification('todo is empty')
     }else if(isDuplicate){
-      alert('todo already exists')  
+      showNotification('todo already exists')  
     }
     else { if(EditTodoId >= 0){
         // update the edit todo
@@ -107,4 +108,14 @@ function deleteTodo(todoId){
 
     //re-render
     renderTodos();
+}
+//SHOW A NOTIFICATION
+function showNotification(msg){
+    notificationEl.innerHTML = msg;
+
+    notificationEl.classList.add('.notif-enter');
+
+    setTimeout(()=>{
+        notificationEl.classList.remove('notif-enter')
+    }, 2000)
 }
